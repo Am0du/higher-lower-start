@@ -18,6 +18,11 @@ def rerun():
     else:
         game_rerun = True
         return game_rerun
+def choice(choices):
+    choice_name = choices['name']
+    choice_description = choices['description']
+    choice_country = choices['country']
+    return f"{choice_name}, a {choice_description}, from {choice_country}"
         
 def game(): 
     def user_pick():
@@ -35,14 +40,18 @@ def game():
     score = 0
     while game_play is True:
         run_logo()
-        
+
+        # generate the random data
         choice_1 = random.choice(data)
         choice_2 = random.choice(data)
-        
+        if choice_1 == choice_2:
+            choice_2 = random.choice(data)
+                                
+        #captures follower count
         FOLLOWER_A = choice_1['follower_count']
         FOLLOWER_B = choice_2['follower_count']
         
-        print(f"Compare A: {choice_1['name']}, a {choice_1['description']}, from {choice_1['country']}\n{vs}\nCompare B: {choice_2['name']}, a {choice_2['description']}, from {choice_2['country']} ")
+        print(f"Compare A: {choice(choice_1)}\n{vs}\nCompare B: {choice(choice_2)} ")
         
         USER_CHOICE = input("Who has more followers? Type 'A' or 'B': ").upper()
         
@@ -63,7 +72,7 @@ def game():
             print(f"Sorry {user_name}, that's wrong, Final score: {score}")
     
     
-    
+    #restarts the game 
     restart_game = input("Do you want to Play again. Type 'y' and 'n' to stop: ")
     if restart_game == 'y':
         game()
